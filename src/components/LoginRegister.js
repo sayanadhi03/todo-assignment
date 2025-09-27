@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
@@ -32,29 +32,28 @@ const LoginRegister = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
-          email, 
-          password, 
-          tenantSlug 
+        body: JSON.stringify({
+          email,
+          password,
+          tenantSlug,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Registration failed');
+        throw new Error(data.error || "Registration failed");
       }
 
       // Auto-login after successful registration
-      localStorage.setItem('token', data.accessToken);
-      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem("token", data.accessToken);
+      localStorage.setItem("user", JSON.stringify(data.user));
       window.location.reload(); // Refresh to update auth context
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -91,32 +90,44 @@ const LoginRegister = () => {
           {/* Login/Register Toggle */}
           <div className="flex mb-6">
             <button
-              onClick={() => {setIsLogin(true); setError("");}}
+              onClick={() => {
+                setIsLogin(true);
+                setError("");
+              }}
               className={`flex-1 py-2 px-4 text-sm font-medium rounded-l-md border ${
-                isLogin 
-                  ? 'bg-indigo-600 text-white border-indigo-600' 
-                  : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                isLogin
+                  ? "bg-indigo-600 text-white border-indigo-600"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
               }`}
             >
               🔑 Sign In
             </button>
             <button
-              onClick={() => {setIsLogin(false); setError("");}}
+              onClick={() => {
+                setIsLogin(false);
+                setError("");
+              }}
               className={`flex-1 py-2 px-4 text-sm font-medium rounded-r-md border-l-0 border ${
-                !isLogin 
-                  ? 'bg-indigo-600 text-white border-indigo-600' 
-                  : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                !isLogin
+                  ? "bg-indigo-600 text-white border-indigo-600"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
               }`}
             >
               ➕ Register
             </button>
           </div>
 
-          <form className="space-y-6" onSubmit={isLogin ? handleLogin : handleRegister}>
+          <form
+            className="space-y-6"
+            onSubmit={isLogin ? handleLogin : handleRegister}
+          >
             {/* Tenant Selection (Register only) */}
             {!isLogin && (
               <div>
-                <label htmlFor="tenant" className="block text-sm font-medium text-gray-700">
+                <label
+                  htmlFor="tenant"
+                  className="block text-sm font-medium text-gray-700"
+                >
                   🏢 Company
                 </label>
                 <select
@@ -136,7 +147,10 @@ const LoginRegister = () => {
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 📧 Email address
               </label>
               <div className="mt-1">
@@ -149,7 +163,9 @@ const LoginRegister = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  placeholder={isLogin ? "Enter your email" : "Enter any email address"}
+                  placeholder={
+                    isLogin ? "Enter your email" : "Enter any email address"
+                  }
                 />
               </div>
               {!isLogin && (
@@ -161,7 +177,10 @@ const LoginRegister = () => {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 🔒 Password
               </label>
               <div className="mt-1">
@@ -223,7 +242,9 @@ const LoginRegister = () => {
                   <div className="w-full border-t border-gray-300" />
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">🧪 Test accounts</span>
+                  <span className="px-2 bg-white text-gray-500">
+                    🧪 Test accounts
+                  </span>
                 </div>
               </div>
 
@@ -238,16 +259,19 @@ const LoginRegister = () => {
                     <div className="flex items-center justify-between">
                       <div>
                         <div className="font-medium">{account.email}</div>
-                        <div className="text-gray-600">{account.tenant} • {account.role}</div>
+                        <div className="text-gray-600">
+                          {account.tenant} • {account.role}
+                        </div>
                       </div>
                       <div className="text-lg">
-                        {account.role === 'Admin' ? '👑' : '👤'}
+                        {account.role === "Admin" ? "👑" : "👤"}
                       </div>
                     </div>
                   </button>
                 ))}
                 <p className="text-xs text-gray-500 mt-2 text-center">
-                  All test passwords: <code className="bg-gray-100 px-1 rounded">password</code>
+                  All test passwords:{" "}
+                  <code className="bg-gray-100 px-1 rounded">password</code>
                 </p>
               </div>
             </div>
@@ -256,10 +280,16 @@ const LoginRegister = () => {
           {/* Registration Info */}
           {!isLogin && (
             <div className="mt-6 p-4 bg-blue-50 rounded-md border border-blue-200">
-              <h4 className="text-sm font-medium text-blue-800 mb-2">📋 Registration Info:</h4>
+              <h4 className="text-sm font-medium text-blue-800 mb-2">
+                📋 Registration Info:
+              </h4>
               <ul className="text-xs text-blue-700 space-y-1">
-                <li>• New users are created as <strong>Members</strong></li>
-                <li>• Only existing Admins can upgrade plans and manage users</li>
+                <li>
+                  • New users are created as <strong>Members</strong>
+                </li>
+                <li>
+                  • Only existing Admins can upgrade plans and manage users
+                </li>
                 <li>• You can join either Acme or Globex company</li>
                 <li>• Each company has its own separate data</li>
               </ul>
