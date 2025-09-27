@@ -7,7 +7,7 @@ import { comparePassword, generateToken } from "../../../../../lib/auth";
 export async function POST(request) {
   try {
     console.log("Login attempt starting...");
-    
+
     console.log("Connecting to database...");
     await connectDB();
     console.log("Database connected successfully");
@@ -79,19 +79,19 @@ export async function POST(request) {
     console.error("Login error:", error);
     console.error("Error message:", error.message);
     console.error("Error stack:", error.stack);
-    
+
     // Return more detailed error in development
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== "production") {
       return NextResponse.json(
-        { 
+        {
           error: "Internal server error",
           details: error.message,
-          stack: error.stack 
+          stack: error.stack,
         },
         { status: 500 }
       );
     }
-    
+
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
