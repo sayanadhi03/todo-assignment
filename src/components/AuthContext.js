@@ -25,9 +25,9 @@ export const AuthProvider = ({ children }) => {
     if (storedToken && storedUser) {
       try {
         // Check if token is expired by parsing it (basic check)
-        const tokenPayload = JSON.parse(atob(storedToken.split('.')[1]));
+        const tokenPayload = JSON.parse(atob(storedToken.split(".")[1]));
         const currentTime = Math.floor(Date.now() / 1000);
-        
+
         if (tokenPayload.exp && tokenPayload.exp < currentTime) {
           // Token is expired, clear it
           console.log("Token expired, clearing stored auth data");
@@ -93,14 +93,17 @@ export const AuthProvider = ({ children }) => {
       ...options,
       headers: {
         ...options.headers,
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
     // If token expired, clear auth data and redirect to login
     if (response.status === 401) {
       const errorData = await response.text();
-      if (errorData.includes("expired") || errorData.includes("TokenExpiredError")) {
+      if (
+        errorData.includes("expired") ||
+        errorData.includes("TokenExpiredError")
+      ) {
         console.log("Token expired, logging out");
         logout();
         return null;

@@ -75,9 +75,4 @@ function tenantGuard(req, res, next) {
   next();
 }
 
-export {
-  authMiddleware,
-  verifyAuth,
-  requireRole,
-  tenantGuard,
-};
+export { authMiddleware, verifyAuth, requireRole, tenantGuard };
