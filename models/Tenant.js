@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const TenantSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
@@ -7,5 +7,4 @@ const TenantSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-module.exports =
-  mongoose.models.Tenant || mongoose.model("Tenant", TenantSchema);
+export default mongoose.models.Tenant || mongoose.model("Tenant", TenantSchema);

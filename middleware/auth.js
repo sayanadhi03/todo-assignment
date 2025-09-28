@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -75,7 +75,7 @@ function tenantGuard(req, res, next) {
   next();
 }
 
-module.exports = {
+export {
   authMiddleware,
   verifyAuth,
   requireRole,
